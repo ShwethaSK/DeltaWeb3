@@ -15,12 +15,12 @@
 	   }
 </style>
 <script type="text/javascript">
-var x1=0;
 var z=getParameterByName('id');
-
+var text;
+var possible;
       if(z!=null)
         { 
-        	test();        }
+        	document.write(DIV.getElementById(z));       }
 
 <?php
 include("session.php");
@@ -29,20 +29,29 @@ $var=$login_session;
     var s="<?php echo $var; ?>";
 	function add_text()
 	{
-	  x1++;
+     random(5);
       DIV=document.createElement("LI");
-      DIV.setAttribute("id", x1);
+      DIV.setAttribute("id", text);
       x=document.getElementById("input").value;
       textnode1=document.createTextNode(x);
       textnode2=document.createTextNode("Published by-");
       textnode3=document.createTextNode(s+"   ");
+      textnode4=document.createTextNode("   Id-"+text);
       DIV.appendChild(textnode2);
       DIV.appendChild(textnode3);
       DIV.appendChild(textnode1);
+      DIV.appendChild(textnode4);
       node=document.getElementById("div");
       node.appendChild(DIV);
       document.getElementById("input").value="";
 	}
+  function random(length)
+  {
+    text = "";
+    possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for(var i = 0; i < length; i++) 
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
 		function checkEdits()
     {
 	     if(localStorage.userEdits!=null)

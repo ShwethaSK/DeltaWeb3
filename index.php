@@ -6,7 +6,7 @@
 	</title>
 	<style type="text/css">
 		body{
-			background-color: beige;
+			background-color: lightgrey;
 			color: purple;
 			font-weight: bold;
 			font-family: cursive;

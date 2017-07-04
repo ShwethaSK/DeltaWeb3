@@ -6,7 +6,7 @@
 	</title>
 	<style type="text/css">
 		body{
-			background-color: lightyellow;
+			background-color: yellow;
 			font-weight: bold;
 		}
 		h1,h2{

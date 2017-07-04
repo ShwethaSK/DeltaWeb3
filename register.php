@@ -13,16 +13,18 @@
 </body>
 </html>
 <?php
-$con=mysql_connect("localhost","root","")or die("Failed to connect to database:"+mysql_error());
-$db=mysql_select_db("test",$con)or die("Failed to connect to database:"+mysql_error());
+$con=mysqli_connect("localhost","root","")or die("Failed to connect to database:"+mysqli_error());
+$db=mysqli_select_db($con,"sys")or die("Failed to connect to database:"+mysqli_error());
 if(isset($_POST['submit']))
 SignUp();
 function SignUp()
 {
 if(!empty($_POST['username']))
 {
-	$query=mysql_query("SELECT * FROM Users WHERE username='$_POST[username]' AND password='$_POST[password]'")or die(mysql_error());
-	if(!$row=mysql_fetch_array($query))
+	$con=mysqli_connect("localhost","root","")or die("Failed to connect to database:"+mysqli_error());
+$db=mysqli_select_db($con,"sys")or die("Failed to connect to database:"+mysqli_error());
+	$query=mysqli_query($con,"SELECT * FROM Users WHERE username='$_POST[username]' AND password='$_POST[password]'")or die(mysqli_error());
+	if(!$row=mysqli_fetch_array($query))
 		NewUser();
 	else
 	{
@@ -37,10 +39,12 @@ function NewUser()
 	$password=$_POST['password'];
 	$email=$_POST['email'];
     $name=$_POST['name'];
-    $query=mysql_query("INSERT INTO Users(fullName,email,userName,password) VALUES('$name','$email','$username',SHA('$password'))") or die(mysql_error());
+    $con=mysqli_connect("localhost","root","")or die("Failed to connect to database:"+mysqli_error());
+$db=mysqli_select_db($con,"sys")or die("Failed to connect to database:"+mysqli_error());
+    $query=mysqli_query($con,"INSERT INTO Users(fullName,email,userName,password) VALUES('$name','$email','$username',SHA('$password'))") or die(mysqli_error());
     if($query)
     {
-    	echo "Registration completed successfully";
+    	echo "Registration completed successfully<br />";
     	echo "<a href='index.php'>Click here to go back to homepage</a>";
     }
 }

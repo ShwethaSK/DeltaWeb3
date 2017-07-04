@@ -50,16 +50,16 @@
 </html>
 <?php
 define('HOST', 'localhost');
-define('NAME', 'test');
+define('NAME', 'sys');
 define('USER','root');
 define('PASSWORD', '');
-$con=mysql_connect(HOST,USER,PASSWORD) or die("Failed to connect to database:"+mysql_error());
-$db=mysql_select_db(NAME,$con)or die("Failed to connect to my database:"+mysql_error());
-if(mysql_errno($con))
+$con=mysqli_connect(HOST,USER,PASSWORD) or die("Failed to connect to database:"+mysqli_error());
+$db=mysqli_select_db($con,NAME)or die("Failed to connect to my database:"+mysqli_error());
+if(mysqli_errno($con))
 {
-   echo "Failed to connect to database:"+mysqlerror();
+   echo "Failed to connect to database:"+mysqli_error();
 }
-mysql_query("CREATE TABLE Users
+mysqli_query($con,"CREATE TABLE Users
 	(
 	userId int(9) NOT NULL auto_increment,
 	fullName VARCHAR(50) NOT NULL,

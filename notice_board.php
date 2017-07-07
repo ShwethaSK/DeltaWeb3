@@ -2,71 +2,18 @@
 <html>
 <head>
 <style type="text/css">
-	body{
+body{
 		background-color: lightgreen;
 	    }
-	h1{
+	h1,h2{
 		color: brown;
 	  }
-	#div{
-		background:#eee;
-		border: 1px dotted #ccc;
-		margin: 1em;
-	   }
-</style>
-<script type="text/javascript">
-var z=getParameterByName('id');
-var text;
-var possible;
-      if(z!=null)
-        { 
-        	document.write(DIV.getElementById(z));       }
-
-<?php
-include("session.php");
-$var=$login_session;
-?>
-    var s="<?php echo $var; ?>";
-	function add_text()
-	{
-     random(5);
-      DIV=document.createElement("LI");
-      DIV.setAttribute("id", text);
-      x=document.getElementById("input").value;
-      textnode1=document.createTextNode(x);
-      textnode2=document.createTextNode("Published by-");
-      textnode3=document.createTextNode(s+"   ");
-      textnode4=document.createTextNode("   Id-"+text);
-      DIV.appendChild(textnode2);
-      DIV.appendChild(textnode3);
-      DIV.appendChild(textnode1);
-      DIV.appendChild(textnode4);
-      node=document.getElementById("div");
-      node.appendChild(DIV);
-      document.getElementById("input").value="";
-	}
-  function random(length)
-  {
-    text = "";
-    possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for(var i = 0; i < length; i++) 
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-		function checkEdits()
-    {
-	     if(localStorage.userEdits!=null)
-	document.getElementById("div").innerHTML=localStorage.userEdits;
-      }
-        function save_notes()
-		{
- 	     editElem=document.getElementById("div");
-     	 editElem.contentEditable="false";
-	     userVersion=editElem.innerHTML;
-	     localStorage.userEdits=userVersion;
-	     alert("Changes saved");
-	     document.getElementById("div").innerHTML;
-		}
-        function getParameterByName(name,url)
+	  </style>
+	  <script type="text/javascript">
+   var z=getParameterByName('id');
+   if(z!=null)
+   window.location.assign("code1.php?id="+z);
+   function getParameterByName(name,url)
         {
         	if(!url)url=window.location.href;
         	name=name.replace(/[\[\]]/g,"\\$&");
@@ -75,26 +22,46 @@ $var=$login_session;
         	if(!results[2]) return '';
         	return decodeURIComponent(results[2].replace(/\+/g," "));
         }
-       function test()
-     {
-        window.location.replace("test.php");
-       }
-        </script>
-	<title>
-		Snippet sharing forum
-	</title>
+	  </script>
+	<title>Snippet sharing forum</title>
 </head>
-<body onload="checkEdits()">
-<h1 >Share your code snippets here...
-</h1>
-<h3 >
-Paste your snippets here...
-</h3> <br />
-<textarea id="input" cols="50" rows="20">
-</textarea>
-<input type="button" name="submit" value="Submit" onclick="add_text()" />
-<input type="button" name="save" value="Save edits" onclick="save_notes()" />
-<div id="div" class="code">
-</div>
+<body>
+<h1>Welcome to the code snippet sharing page...</h1>
+<h2>Paste your code snippet</h2>
+<fieldset style="width:75%">
+	<table border="0">
+	<tr>
+		<form method="POST" action="save_dtbs.php">
+		<td>CODE</td><td><input type="text" name="code"></td>
+    </tr>
+		<tr>
+		<td>ID</td><td><input type="text" name="id"></td>
+		</tr>
+		<tr>
+			<td><input type="submit" name="submit" value="Submit"></td>
+		</tr>	
+		</form>
+	</table>
+</fieldset>
+<input type="button" name="view_dtbs" value="View your codes" onclick="location.href='view_dtbs.php';">
 </body>
 </html>
+<?php
+define('HOST', 'localhost');
+define('NAME', 'mysql');
+define('USER','root');
+define('PASSWORD', '');
+$con=mysqli_connect(HOST,USER,PASSWORD) or die("Failed to connect to database:"+mysqli_error());
+$db=mysqli_select_db($con,NAME)or die("Failed to connect to my database:"+mysqli_error());
+if(mysqli_errno($con))
+{
+   echo "Failed to connect to database:"+mysqli_error();
+}
+mysqli_query($con,"CREATE TABLE Code
+	(
+	uniqueId VARCHAR(5) NOT NULL ,
+	userName VARCHAR(50) NOT NULL,
+	Code VARCHAR(50000) NOT NULL,
+	PRIMARY KEY(uniqueId))
+	");
+?>

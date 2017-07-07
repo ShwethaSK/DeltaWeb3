@@ -50,7 +50,7 @@
 </html>
 <?php
 define('HOST', 'localhost');
-define('NAME', 'sys');
+define('NAME', 'mysql');
 define('USER','root');
 define('PASSWORD', '');
 $con=mysqli_connect(HOST,USER,PASSWORD) or die("Failed to connect to database:"+mysqli_error());
